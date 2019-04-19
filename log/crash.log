@@ -1,0 +1,6 @@
+2019-04-16 20:57:08 =SUPERVISOR REPORT====
+     Supervisor: {local,'Elixir.Logger.Supervisor'}
+     Context:    child_terminated
+     Reason:     normal
+     Offender:   [{pid,<0.464.0>},{id,'Elixir.Logger.ErrorHandler'},{mfargs,{'Elixir.Logger.Watcher',start_link,[{error_logger,'Elixir.Logger.ErrorHandler',{true,false,500}}]}},{restart_type,permanent},{shutdown,5000},{child_type,worker}]
+
