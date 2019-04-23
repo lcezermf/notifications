@@ -31,4 +31,4 @@ use Mix.Config
 
 config :producer,
   amqp_url: "amqp://guest:guest@localhost",
-  exchange: "my-exchange"
+  exchange: "send_message_exchange"
