@@ -34,7 +34,8 @@ defmodule Consumer.Consumer do
     end
   end
 
-  # def handle_info({:basic_consume_ok, %{consumer_tag: _consumer_tag}}, channel) do
-  #   {:noreply, channel}
-  # end
+  # Confirmation sent by the broker after registering this process as a consumer
+  def handle_info({:basic_consume_ok, %{consumer_tag: _consumer_tag}}, channel) do
+    {:noreply, channel}
+  end
 end
