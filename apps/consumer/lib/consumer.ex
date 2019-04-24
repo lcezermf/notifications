@@ -22,9 +22,10 @@ defmodule Consumer.Consumer do
       {:ok, conn} ->
         Process.link(conn.pid)
         {:ok, channel} = AMQP.Channel.open(conn)
-        AMQP.Exchange.declare(channel, @exchange, :fanout)
         {:ok, %{queue: queue_name}} = Queue.declare(channel, "")
+        AMQP.Exchange.declare(channel, @exchange, :fanout)
         AMQP.Queue.bind(channel, queue_name, @exchange)
+        {:ok, _consumer_tag} = AMQP.Basic.consume(channel, queue_name)
         {:ok, %{channel: channel, connection: conn, queue_name: queue_name, exchange: @exchange}}
       {:error, reason} ->
         IO.puts("Failed -> #{inspect(reason)}")
@@ -32,4 +33,8 @@ defmodule Consumer.Consumer do
         get_connection()
     end
   end
+
+  # def handle_info({:basic_consume_ok, %{consumer_tag: _consumer_tag}}, channel) do
+  #   {:noreply, channel}
+  # end
 end
