@@ -37,7 +37,9 @@ defmodule Producer.Broker do
   end
 
   def handle_cast({:publish_message, message}, state) do
-    Basic.publish(state.channel, state.exchange, "", message)
+    encoded_message = Poison.encode!(message)
+
+    Basic.publish(state.channel, state.exchange, "", encoded_message)
     {:noreply, state}
   end
 end
