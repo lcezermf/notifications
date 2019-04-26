@@ -1,4 +1,4 @@
-defmodule Consumer.Consumer do
+defmodule Consumer.MessageConsumer do
   use GenServer
   use AMQP
 
@@ -39,5 +39,23 @@ defmodule Consumer.Consumer do
     {:noreply, channel}
   end
 
-  # https://github.com/pma/amqp#setup-a-consumer-genserver
+  # # Sent by the broker when the consumer is unexpectedly cancelled (such as after a queue deletion)
+  def handle_info({:basic_cancel, %{consumer_tag: _consumer_tag}}, channel) do
+    {:stop, :normal, channel}
+  end
+
+  # # Confirmation sent by the broker to the consumer process after a Basic.cancel
+  def handle_info({:basic_cancel_ok, %{consumer_tag: _consumer_tag}}, channel) do
+    {:noreply, channel}
+  end
+
+  def handle_info({:basic_deliver, payload, %{delivery_tag: tag, redelivered: redelivered}}, channel) do
+    # You might want to run payload consumption in separate Tasks in production
+    consume(channel, tag, redelivered, payload)
+    {:noreply, channel}
+  end
+
+  defp consume(_channel, _tag, _redelivered, payload) do
+    IO.inspect(payload)
+  end
 end

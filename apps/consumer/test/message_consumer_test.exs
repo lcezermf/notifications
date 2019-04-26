@@ -1,11 +1,11 @@
-defmodule Consumer.ConsumerTest do
+defmodule Consumer.MessageConsumerTest do
   use ExUnit.Case, async: false
   import Mock
 
-  alias Consumer.Consumer
+  alias Consumer.MessageConsumer
 
   setup do
-    pid = case Consumer.start_link do
+    pid = case MessageConsumer.start_link do
       {:error, {:already_started, pid}} -> pid
       {:ok, pid} -> pid
     end
@@ -22,7 +22,7 @@ defmodule Consumer.ConsumerTest do
         exchange: "send_message_exchange"
       } = :sys.get_state(pid)
 
-      assert {:error, {:already_started, _pid}} = Consumer.start_link()
+      assert {:error, {:already_started, _pid}} = MessageConsumer.start_link()
     end
 
     test "returns connection info" do
@@ -33,7 +33,7 @@ defmodule Consumer.ConsumerTest do
           queue_name: _queue_name,
           exchange: "send_message_exchange"
         }
-      } = Consumer.init(:ok)
+      } = MessageConsumer.init(:ok)
     end
   end
 
@@ -41,8 +41,22 @@ defmodule Consumer.ConsumerTest do
     test "basic_consume_ok", %{pid: pid} do
       channel = :sys.get_state(pid)
 
-      assert {:noreply, channel} ==
-        Consumer.handle_info({:basic_consume_ok, %{consumer_tag: 1}}, channel)
+      assert {:noreply, channel} =
+        MessageConsumer.handle_info({:basic_consume_ok, %{consumer_tag: 1}}, channel)
+    end
+
+    test "basic_cancel", %{pid: pid} do
+      channel = :sys.get_state(pid)
+
+      assert {:stop, :normal, channel} =
+        MessageConsumer.handle_info({:basic_cancel, %{consumer_tag: 2}}, channel)
+    end
+
+    test "basic_cancel_pl", %{pid: pid} do
+      channel = :sys.get_state(pid)
+
+      assert {:noreply, channel} =
+        MessageConsumer.handle_info({:basic_cancel_ok, %{consumer_tag: 3}}, channel)
     end
   end
 end
