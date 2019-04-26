@@ -38,4 +38,6 @@ defmodule Consumer.Consumer do
   def handle_info({:basic_consume_ok, %{consumer_tag: _consumer_tag}}, channel) do
     {:noreply, channel}
   end
+
+  # https://github.com/pma/amqp#setup-a-consumer-genserver
 end
