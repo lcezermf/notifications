@@ -18,7 +18,7 @@ defmodule Consumer.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :amqp],
+      extra_applications: [:logger, :amqp, :ecto],
       mod: {Consumer.Application, []}
     ]
   end
@@ -30,6 +30,20 @@ defmodule Consumer.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:amqp, "~> 1.1"},
       {:mock, "~> 0.3", only: :test}
+    ]
+  end
+
+  # Aliases are shortcuts or tasks specific to the current project.
+  # For example, to create, migrate and run the seeds file at once:
+  #
+  #     $ mix ecto.setup
+  #
+  # See the documentation for `Mix` for more info on aliases.
+  defp aliases do
+    [
+      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.reset": ["ecto.drop", "ecto.setup"],
+      test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 end

@@ -31,3 +31,11 @@ use Mix.Config
 config :consumer,
   amqp_url: "amqp://guest:guest@localhost",
   exchange: "send_message_exchange"
+
+config :consumer, ecto_repos: [Consumer.Repo]
+
+config :consumer, Consumer.Repo,
+  database: "notification_consumer_dev",
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost"
