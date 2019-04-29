@@ -38,7 +38,7 @@ defmodule Producer.BrokerTest do
   describe "publish/1" do
     test "must publish a message to the given exchange" do
       this = self()
-      message = %{event: "CREATE_MESSAGE", data: "my message"}
+      message = %{event: "CREATE_SIMPLE_MESSAGE", data: "my message"}
       exchange = "send_message_exchange"
 
       with_mock AMQP.Basic, [publish: fn(_channel, _exchange, _routing_key, _message) -> send(this, {:publish_message, message}) end] do

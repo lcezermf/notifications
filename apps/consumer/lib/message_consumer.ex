@@ -57,5 +57,7 @@ defmodule Consumer.MessageConsumer do
 
   defp consume(_channel, _tag, _redelivered, payload) do
     IO.inspect(payload)
+
+    # Need to create a PayloadHandler module with all functions overload
   end
 end
