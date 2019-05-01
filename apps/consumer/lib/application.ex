@@ -1,6 +1,7 @@
 defmodule Consumer.Application do
   use Application
-  alias Consumer.{MessageConsumer, Repo}
+  alias Consumer.Repo
+  alias Consumer.EventMessageConsumer.MessageConsumer
 
   def start(_type, _args) do
     import Supervisor.Spec

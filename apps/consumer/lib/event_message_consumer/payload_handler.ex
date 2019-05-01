@@ -1,4 +1,4 @@
-defmodule Consumer.PayloadHandler do
+defmodule Consumer.EventMessageConsumer.PayloadHandler do
   def handle(%{event: "CREATE_SIMPLE_MESSAGE", data: data}) do
     :ok
   end

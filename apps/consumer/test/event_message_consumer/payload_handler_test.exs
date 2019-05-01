@@ -1,8 +1,8 @@
-defmodule Consumer.PayloadHandlerTest do
+defmodule Consumer.EventMessageConsumer.PayloadHandlerTest do
   use ExUnit.Case, async: false
   import Mock
 
-  alias Consumer.PayloadHandler
+  alias Consumer.EventMessageConsumer.PayloadHandler
 
   describe "handle/1" do
     test "must handle payload with %{event: \"CREATE_SIMPLE_MESSAGE\", data: \"some message\"}" do

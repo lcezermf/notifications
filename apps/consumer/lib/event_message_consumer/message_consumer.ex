@@ -1,4 +1,4 @@
-defmodule Consumer.MessageConsumer do
+defmodule Consumer.EventMessageConsumer.MessageConsumer do
   use GenServer
   use AMQP
 

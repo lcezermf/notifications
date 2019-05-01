@@ -1,8 +1,8 @@
-defmodule Consumer.MessageConsumerTest do
+defmodule Consumer.EventMessageConsumer.MessageConsumerTest do
   use ExUnit.Case, async: false
   import Mock
 
-  alias Consumer.MessageConsumer
+  alias Consumer.EventMessageConsumer.MessageConsumer
 
   setup do
     pid = case MessageConsumer.start_link do
