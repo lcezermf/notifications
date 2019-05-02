@@ -27,8 +27,8 @@ defmodule Producer.MixProject do
   defp deps do
     [
       {:amqp, "~> 1.1"},
-      {:poison, "~> 3.1"},
-      {:mock, "~> 0.3", only: :test}
+      {:mock, "~> 0.3", only: :test},
+      {:poison, "~> 3.1"}
     ]
   end
 end

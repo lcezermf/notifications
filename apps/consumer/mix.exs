@@ -29,7 +29,8 @@ defmodule Consumer.MixProject do
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
       {:amqp, "~> 1.1"},
-      {:mock, "~> 0.3", only: :test}
+      {:mock, "~> 0.3", only: :test},
+      {:poison, "~> 3.1"}
     ]
   end
 
