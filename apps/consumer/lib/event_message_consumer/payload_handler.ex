@@ -9,11 +9,16 @@ defmodule Consumer.EventMessageConsumer.PayloadHandler do
     |> handle_payload()
   end
 
-  defp handle_payload(%{event: "CREATE_SIMPLE_MESSAGE", data: data}) do
+  defp handle_payload(%{event: "CREATE_MESSAGE", data: data}) do
     case Messages.create_message(data) do
       {:ok, _message} -> :ok
       _ -> :reject
     end
+  end
+
+  defp handle_payload(%{event: "CREATE_SIMPLE_MESSAGE", data: data}) do
+    IO.inspect(data)
+    :ok
   end
 
   defp handle_payload(%{event: event}) do
