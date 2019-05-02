@@ -4,7 +4,7 @@ defmodule Consumer.EventMessageConsumer.PayloadHandlerTest do
 
   describe "handle/1" do
     test "with valid event and valid data" do
-      payload = %{event: "CREATE_SIMPLE_MESSAGE", data: %{content: "Some data"}}
+      payload = %{event: "CREATE_MESSAGE", data: %{content: "Some data"}}
 
       assert :ok = PayloadHandler.handle(payload)
     end

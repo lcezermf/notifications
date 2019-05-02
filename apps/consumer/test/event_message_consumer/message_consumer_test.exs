@@ -65,7 +65,7 @@ defmodule Consumer.EventMessageConsumer.MessageConsumerTest do
 
     with_mock PayloadHandler, [handle: fn(_payload) -> :ok end] do
       MessageConsumer.handle_info(
-        {:basic_deliver, "{\"event\": \"CREATE_SIMPLE_MESSAGE\"}", %{delivery_tag: tag, redelivered: false}}, channel
+        {:basic_deliver, "{\"event\": \"CREATE_MESSAGE\"}", %{delivery_tag: tag, redelivered: false}}, channel
       )
 
       assert called(PayloadHandler.handle(:_))
