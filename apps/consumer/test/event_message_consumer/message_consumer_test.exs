@@ -1,8 +1,7 @@
 defmodule Consumer.EventMessageConsumer.MessageConsumerTest do
   use ExUnit.Case, async: false
   import Mock
-
-  alias Consumer.EventMessageConsumer.MessageConsumer
+  alias Consumer.EventMessageConsumer.{PayloadHandler, MessageConsumer}
 
   setup do
     pid = case MessageConsumer.start_link do
@@ -57,6 +56,19 @@ defmodule Consumer.EventMessageConsumer.MessageConsumerTest do
 
       assert {:noreply, channel} =
         MessageConsumer.handle_info({:basic_cancel_ok, %{consumer_tag: 3}}, channel)
+    end
+  end
+
+  test "event develiery ok", %{pid: pid} do
+    channel = :sys.get_state(pid)
+    tag = :rand.uniform(999_999_999)
+
+    with_mock PayloadHandler, [handle: fn(_payload) -> :ok end] do
+      MessageConsumer.handle_info(
+        {:basic_deliver, "{\"event\": \"CREATE_SIMPLE_MESSAGE\"}", %{delivery_tag: tag, redelivered: false}}, channel
+      )
+
+      assert called(PayloadHandler.handle(:_))
     end
   end
 end

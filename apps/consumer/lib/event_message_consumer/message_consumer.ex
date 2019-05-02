@@ -2,6 +2,8 @@ defmodule Consumer.EventMessageConsumer.MessageConsumer do
   use GenServer
   use AMQP
 
+  alias Consumer.EventMessageConsumer.PayloadHandler
+
   @amqp_url Application.get_env(:consumer, :amqp_url)
   @exchange Application.get_env(:consumer, :exchange)
 
@@ -56,8 +58,6 @@ defmodule Consumer.EventMessageConsumer.MessageConsumer do
   end
 
   defp consume(_channel, _tag, _redelivered, payload) do
-    IO.inspect(payload)
-
-    # Need to create a PayloadHandler module with all functions overload
+    PayloadHandler.handle(payload)
   end
 end
